@@ -1,0 +1,15 @@
+INSERT INTO product (title, price, image, description, qty) VALUES
+('Baby Cap (Black)', 12.99, '/products/baby-cap-black.png', 'This cute black baby cap will keep your little one stylish and comfortable.', 50),
+('Baby Onesie (Beige)', 19.99, '/products/baby-onesie-beige-1.png', 'Adorable beige onesie for your newborn. Soft and cozy fabric.', 100),
+('Bomber Jacket (Army)', 49.99, '/products/bomber-jacket-army.png', 'Stay trendy with this stylish army green bomber jacket.', 30),
+('Cowboy Hat (Tan)', 24.99, '/products/cowboy-hat-tan-1.png', 'Complete your western look with this tan cowboy hat.', 20),
+('Cup (White)', 8.99, '/products/cup-white.png', 'Simple and elegant white cup for your morning coffee.', 80),
+('Dog Sweater', 15.99, '/products/dog-sweater-1.png', 'Keep your furry friend warm with this cute dog sweater.', 40),
+('Hoodie', 29.99, '/products/hoodie-1.png', 'Comfortable hoodie for those chilly evenings.', 60),
+('Keyboard', 39.99, '/products/keyboard.png', 'High-quality keyboard for your gaming or typing needs.', 10),
+('Mug', 6.99, '/products/mug-1.png', 'Start your day right with this adorable mug.', 90),
+('Pacifier', 4.99, '/products/pacifier-2.png', 'Soothe your baby with this pacifier.', 120),
+('Shoes', 59.99, '/products/shoes-4.png', 'Stylish and comfortable shoes for everyday wear.', 15),
+('T-Shirt (Circles Black)', 14.99, '/products/t-shirt-circles-black.png', 'Cool black t-shirt with circle pattern.', 70),
+('T-Shirt (Circles Blue)', 14.99, '/products/t-shirt-circles-blue.png', 'Casual blue t-shirt with circle design.', 80),
+('T-Shirt (Spiral)', 16.99, '/products/t-shirt-spiral-1.png', 'Unique spiral pattern t-shirt for a distinctive look.', 50);
