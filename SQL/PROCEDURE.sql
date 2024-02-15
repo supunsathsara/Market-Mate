@@ -89,9 +89,7 @@ BEGIN
 END //
 
 
-
-DELIMITER //
-
+-- Checkout order
 CREATE PROCEDURE checkout (IN userEmail VARCHAR(255), IN total DECIMAL(10,2), IN address VARCHAR(500), IN mobile VARCHAR(20))
 BEGIN
     DECLARE customerId INT;
@@ -114,10 +112,14 @@ BEGIN
     SELECT orderId, product_id, qty
     FROM cart
     WHERE user_id = customerId;
+
+     -- Deduct purchased quantities from the product table
+    UPDATE product p
+    INNER JOIN cart c ON p.id = c.product_id
+    SET p.qty = p.qty - c.qty
+    WHERE c.user_id = customerId;
     
     -- Remove items from the cart table
     DELETE FROM cart
     WHERE user_id = customerId;
 END //
-
-DELIMITER ;
