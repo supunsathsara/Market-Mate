@@ -15,7 +15,7 @@ export default async function Navbar() {
   const session = await getServerSession();
   //console.log(session)
   return (
-    <nav className="relative flex items-center justify-between p-4 lg:px-6">
+    <nav className="relative flex items-center justify-between p-4 lg:px-6 z-40">
       
       <div className="flex w-full items-center">
         <div className="flex w-full md:w-1/3">
@@ -48,7 +48,9 @@ export default async function Navbar() {
               <>
               <div className='flex gap-1'>
                 <UserIcon className='h-5 my-auto' />
+                <Link href='/account' className='hover:underline-offset-2 hover:underline my-auto'>
                 <span className='text-md my-auto'>{session.user.name}</span>
+                </Link>
               </div>
               <div className=' my-auto text-md hover:underline-offset-2 hover:underline'><Logout/></div>
               </>

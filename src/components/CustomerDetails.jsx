@@ -6,7 +6,7 @@ import { useFormState } from 'react-dom';
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useEffect } from 'react';
-import { CurrencyDollarIcon, CurrencyRupeeIcon } from "@heroicons/react/24/outline";
+import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 
 export default function CustomerDetails({ user, netTotal, merchantSecret, handleCheckout }) {
 
@@ -19,7 +19,6 @@ export default function CustomerDetails({ user, netTotal, merchantSecret, handle
         })
 
     const hashedMerchantSecret = crypto.createHash('md5').update(merchantSecret).digest('hex').toUpperCase();
-    console.log(hashedMerchantSecret)
     const hash = crypto.createHash('md5').update("1225510" + "123456" + netTotal + "LKR" + hashedMerchantSecret).digest('hex').toUpperCase();
 
     function startPayment() {

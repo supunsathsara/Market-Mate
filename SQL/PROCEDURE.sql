@@ -123,3 +123,59 @@ BEGIN
     DELETE FROM cart
     WHERE user_id = customerId;
 END //
+
+
+-- Get 3 Most Recent Orders by email
+CREATE PROCEDURE getRecentOrdersByEmail (IN userEmail VARCHAR(255))
+BEGIN
+    DECLARE customerId INT;
+    
+    -- Get the customer ID based on the email
+    SELECT id INTO customerId
+    FROM user
+    WHERE email = userEmail;
+    
+    -- Select the most recent three orders for the customer
+    SELECT id, total, orderDate
+    FROM `order`
+    WHERE customer_id = customerId
+    ORDER BY orderDate DESC
+    LIMIT 3;
+END //
+
+
+
+-- Get Orders by email
+CREATE PROCEDURE getAllOrdersByEmail (IN userEmail VARCHAR(255))
+BEGIN
+    DECLARE customerId INT;
+    
+    -- Get the customer ID based on the email
+    SELECT id INTO customerId
+    FROM user
+    WHERE email = userEmail;
+    
+    -- Select the most recent three orders for the customer
+    SELECT id, total, orderDate
+    FROM `order`
+    WHERE customer_id = customerId
+    ORDER BY orderDate DESC
+END //
+
+
+-- Get Product details for a given order
+CREATE PROCEDURE getOrderProducts (IN orderId INT)
+BEGIN
+    -- Select product details for the given order ID
+    SELECT 
+        p.id AS product_id,
+        p.title AS product_title,
+        p.price AS unit_price,
+        oi.product_qty AS quantity,
+        (p.price * oi.product_qty) AS total_price,
+        p.image AS product_image,
+        p.description AS product_description
+    FROM order_item oi
+    INNER JOIN product p ON oi.product_id = p.id
+    WHERE oi.order_id = orderId;
+END //

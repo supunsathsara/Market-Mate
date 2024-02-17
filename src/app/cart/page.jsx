@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { query } from '@/lib/db';
 import Image from 'next/image';
-import { BanknotesIcon, XCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import RemoveFromCart from '@/components/RemoveFromCart';
 import { revalidatePath } from 'next/cache';
