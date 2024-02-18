@@ -5,21 +5,24 @@ import crypto from "crypto";
 import { useFormState } from 'react-dom';
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
+import { v4 as uuidv4 } from 'uuid';
 
-export default function CustomerDetails({ user, netTotal, merchantSecret, handleCheckout }) {
+
+export default function CustomerDetails({ user, netTotal, merchantSecret,  handleCheckout }) {
 
     const router = useRouter()
+    const [orderUid, setOrderUid] = useState(uuidv4());
 
-    const [state, submitOrder] = useFormState(handleCheckout,
+    const [state, submitOrder] = useFormState(handleCheckout.bind(null, orderUid),
         {
             message: '',
             error: ''
         })
-
+        
     const hashedMerchantSecret = crypto.createHash('md5').update(merchantSecret).digest('hex').toUpperCase();
-    const hash = crypto.createHash('md5').update("1225510" + "123456" + netTotal + "LKR" + hashedMerchantSecret).digest('hex').toUpperCase();
+    const hash = crypto.createHash('md5').update("1225510" + orderUid + netTotal + "LKR" + hashedMerchantSecret).digest('hex').toUpperCase();
 
     function startPayment() {
         payhere.onCompleted = function onCompleted(orderId) {
@@ -40,17 +43,17 @@ export default function CustomerDetails({ user, netTotal, merchantSecret, handle
         const payment = {
             "sandbox": true,
             "merchant_id": "1225510",
-            "return_url": 'https://supunsathsara.com/',     // Important
-            "cancel_url": 'https://supunsathsara.com/',     // Important
-            "notify_url": "https://supunsathsara.com/",
-            "order_id": "123456",
+            "return_url": 'https://supunsathsara.com/',
+            "cancel_url": 'https://supunsathsara.com/',
+            "notify_url": process.env.NEXT_PUBLIC_PAYHERE_NOTIFY_URL, 
+            "order_id": orderUid,
             "items": "Quick Mart",
             "amount": netTotal,
             "currency": "LKR",
             "first_name": user.name,
             "last_name": "XXX",
             "email": user.email,
-            "phone": "0771234567",
+            "phone": user.mobile || "0790000000",
             "address": "No.1, Galle Road",
             "city": "Colombo",
             "country": "Sri Lanka",
@@ -68,11 +71,15 @@ export default function CustomerDetails({ user, netTotal, merchantSecret, handle
 
     useEffect(() => {
         if (state.message) {
-            toast.success(state.message);
-            router.push('/');
+            if (state.status === 200) {
+                toast.success(state.message);
+            } else {
+                toast.error(state.message);
+            }
+            router.push(`/account/orders/${orderUid}`);
             router.refresh();
         }
-    }, [state.message, router]);
+    }, [state.message, router, state.status]);
 
     useEffect(() => {
         if (state.error) {
@@ -110,6 +117,7 @@ export default function CustomerDetails({ user, netTotal, merchantSecret, handle
                                 Pay
                                 <CurrencyDollarIcon className="h-6 w-6 ml-2" />
                             </button>
+                            <button type="submit">Submit</button>
                         </div>
                     </div>
                 </form>

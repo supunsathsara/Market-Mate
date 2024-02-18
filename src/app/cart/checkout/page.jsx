@@ -4,9 +4,11 @@ import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import Image from "next/image";
 
+
 export default async function CheckoutPage() {
     const session = await getServerSession();
     let netTotal = 0;
+    
 
     const products = await query({
         query: "CALL getCartItemsByEmail(?);",
@@ -26,25 +28,43 @@ export default async function CheckoutPage() {
         values: [session.user.email],
     });
 
-    async function handleCheckout(currentState,formData) {
+    async function handleCheckout(orderUid,currentState,formData) {
         "use server"
 
         try {
+            //console.log(orderUid)
         const name = formData.get("name");
         const email = formData.get("email");
         const mobile = formData.get("mobile");
         const address = formData.get("address");
        
-        console.log(name, email, mobile, address, netTotal)
+        console.log("CHECKOUT ",name, mobile, address, netTotal)
         const order = await query({
-            query: "CALL checkout(?, ?, ?, ?);",
-            values: [session.user.email, netTotal ,address, mobile]
+            query: "CALL checkout(?, ?, ?, ?, ?);",
+            values: [session.user.email,orderUid, netTotal ,address, mobile]
         });
 
+       
+         //check payment status
+         const payment = await query({
+            query: "select status from order_payment WHERE order_id = ?;",
+            values: [orderUid]
+        });
+        
+
         revalidatePath('/cart');
+
+        if (payment[0].status == 2 || payment[0].status == 0) {
+            return {
+                status: 200,
+                message: "Order placed successfully!",
+                error: null
+            }
+        }
+
         return {
-            status: 200,
-            message: "Order placed successfully!",
+            status: 400,
+            message: "Payment failed!",
             error: null
         }
     } catch (error) {
@@ -95,13 +115,13 @@ export default async function CheckoutPage() {
                     </div>
                     <div className="flex justify-between mt-4">
                         <h3 className="text-lg font-semibold">Total</h3>
-                        <p className="text-lg font-semibold">Rs.{netTotal}</p>
+                        <p className="text-lg font-semibold">Rs.{netTotal.toFixed(2)}</p>
                     </div>
                 </div>
                 <span className="border-l-2 min-h-full my-2 mx-2"></span>
                 <div className="w-full ">
                     <h2 className="text-2xl font-semibold text-center">Order Details</h2>
-                    <CustomerDetails user={user[0]} netTotal={netTotal} merchantSecret={process.env.PAYHERE_MERCH_SECRET} handleCheckout={handleCheckout} />
+                    <CustomerDetails user={user[0]} netTotal={netTotal.toFixed(2)} merchantSecret={process.env.PAYHERE_MERCH_SECRET} handleCheckout={handleCheckout} />
                 </div>
 
             </div>

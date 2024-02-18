@@ -47,8 +47,8 @@ export default async function CartPage() {
             <h1 className="text-3xl font-medium mb-4">Cart</h1>
             <div className="flex flex-col gap-4">
                 {products[0].map((product) => (
-                    //convert to decimal and add to netTotal
-                    netTotal += parseFloat(product.total_price),
+                    //convert to two decimal and add to netTotal
+                    netTotal = netTotal + parseFloat(product.total_price),
                     <div
                         key={product.cart_id}
                         className="flex items-center justify-between border-b pb-4"
@@ -81,7 +81,7 @@ export default async function CartPage() {
                 ))}
             </div>
             <div className="flex flex-col float-end justify-end mt-6">
-                <h2 className="text-xl font-medium">Net Total: {netTotal} LKR</h2>
+                <h2 className="text-xl font-medium">Net Total: {netTotal.toFixed(2)} LKR</h2>
                 <div className='flex justify-end mt-3'>
                 <Link href="/cart/checkout" className=" flex text-xl w-fit text-right">
                     <button className='relative flex items-center justify-center rounded-full bg-blue-700 hover:bg-blue-800 p-2 px-4 tracking-wide text-white text-xl my-5'>

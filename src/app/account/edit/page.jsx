@@ -19,14 +19,11 @@ export default async function AccountEditPage() {
             const mobile = formData.get("mobile");
             const address = formData.get("address");
 
-            console.log(name, email, mobile, address)
-
             const update = await query({
                 query: "UPDATE user SET name = ?, mobile = ?, address = ? WHERE email = ?;",
                 values: [name, mobile, address,session.user.email]
             });
 
-            console.log(update.affectedRows)
             revalidatePath('/account');
 
             if (update.affectedRows === 0) {

@@ -44,20 +44,20 @@ export default async function AccountPage() {
 
 
                 </div>
-                <h2 className="text-2xl">Recent Orders</h2>
-                <div className="flex flex-col w-full gap-2">
+                <h2 className="text-2xl py-4">Recent Orders</h2>
+                <div className="flex flex-col w-full">
                     <div className="flex w-full justify-between">
-                        <h5 className="text-md font-medium">Order ID</h5>
-                        <h5 className="text-md font-medium">Order Date</h5>
-                        <h5 className="text-md font-medium">Total</h5>
+                        <h5 className="text-md font-medium w-1/3">Order ID</h5>
+                        <h5 className="text-md font-medium w-1/3">Order Date</h5>
+                        <h5 className="text-md font-medium w-1/3">Total</h5>
                     </div>
                     {orders[0].map((order) => (
                         <div key={order.id} className="flex flex-col w-full gap-2 border-b border-gray-600 p-2">
                             <Link href={`/account/orders/${order.id}`}>
                             <div className="flex w-full justify-between">
-                                <h5 className="text-md font-medium">{order.id}</h5>
-                                <h5 className="text-md font-medium">{new Date(order.orderDate).toLocaleString()}</h5>
-                                <h5 className="text-md font-medium">Rs. {order.total}</h5>
+                                <h5 className="text-sm font-medium w-1/3">{order.id}</h5>
+                                <h5 className="text-md font-medium w-1/3">{new Date(order.orderDate).toLocaleString()}</h5>
+                                <h5 className="text-md font-medium w-1/3">Rs. {order.total}</h5>
                             </div>
                             </Link>
                         </div>

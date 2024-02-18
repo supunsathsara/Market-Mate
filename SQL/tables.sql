@@ -79,3 +79,18 @@ CREATE TABLE `marketmate`.`order_item` (
     REFERENCES `marketmate`.`product` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+
+-- ORDER PAYMENT TABLE
+CREATE TABLE `marketmate`.`order_payment` (
+  `id` VARCHAR(255) NOT NULL,
+  `order_id` VARCHAR(100) NOT NULL,
+  `date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `method` VARCHAR(50) NULL,
+  `status` INT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  INDEX `fk_orderpayment_order_idx` (`order_id` ASC) VISIBLE,
+  CONSTRAINT `fk_orderpayment_order`
+    FOREIGN KEY (`order_id`)
+    REFERENCES `marketmate`.`order` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
