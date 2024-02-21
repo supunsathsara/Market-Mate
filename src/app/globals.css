@@ -16,6 +16,32 @@
   }
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #040407;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #111111;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #252525;
+}
+
+html{
+  scroll-behavior: smooth;
+  
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

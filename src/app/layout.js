@@ -2,6 +2,7 @@
 import ToastProvider from "@/components/ToastProvider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/footer";
 
 
 
@@ -13,10 +14,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen h-full">
         <ToastProvider>
           <Navbar/>
           {children}
+          <Footer/>
         </ToastProvider>
       </body>
     </html>

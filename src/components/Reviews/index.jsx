@@ -8,6 +8,7 @@ import { dbConnect } from "@/lib/mongodb";
 import DeleteReview from "./DeleteReview";
 
 export default async function Reviews({ productId }) {
+    await dbConnect();
     const reviews = await Review.find({ productId });
     // const reviews = [
     //     {
@@ -30,7 +31,7 @@ export default async function Reviews({ productId }) {
     //     }
 
     // ]
-    console.log(reviews)
+    // console.log(reviews)
 
     const session = await getServerSession();
     let user = null;

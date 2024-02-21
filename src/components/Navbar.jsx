@@ -1,8 +1,8 @@
 
 import Link from 'next/link';
 import Search from './search';
-import { ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline';
-import { getServerSession } from 'next-auth';
+import { ShoppingCartIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { getServerSession  } from 'next-auth';
 import Logout from './logout';
 
 
@@ -45,7 +45,7 @@ export default async function Navbar() {
              {session ? (
               <>
               <div className='flex gap-1'>
-                <UserIcon className='h-5 my-auto' />
+                <UserCircleIcon className='h-5 my-auto' />
                 <Link href='/account' className='hover:underline-offset-2 hover:underline my-auto'>
                 <span className='text-md my-auto'>{session.user.name}</span>
                 </Link>
