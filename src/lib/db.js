@@ -1,9 +1,18 @@
 import mysql from "mysql2/promise";
 
+const sslCACertBase64 = process.env.MYSQL_CA_CERT;
+const decodedCACert = Buffer.from(sslCACertBase64, 'base64');
+const caCert = decodedCACert.toString('utf-8');
+
 export async function query({ query, values = [] }) {
   // PlanetScale;
   const dbconnection = await mysql.createConnection(
-    process.env.MYSQL_DATABASE_URL
+    process.env.MYSQL_DATABASE_URL,
+    {
+      ssl: {
+        ca: caCert
+      }
+    }
   );
 
   //local

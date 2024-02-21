@@ -3,6 +3,8 @@ import Price from "@/components/price";
 import { query } from "@/lib/db";
 import Image from "next/image";
 import { getServerSession } from 'next-auth';
+import Reviews from "@/components/Reviews";
+import { notFound } from "next/navigation";
 
 export default async function ProductPage({ params }) {
 
@@ -20,7 +22,7 @@ export default async function ProductPage({ params }) {
     return (
         <>
             <div className="mx-auto max-w-screen-xl px-4">
-                <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row lg:gap-8">
+                <div className="flex flex-col rounded-lg border p-8 border-neutral-800 bg-black md:p-12 lg:flex-row lg:gap-8">
                     <div className="h-full w-full basis-full lg:basis-4/6">
                         <div className="relative aspect-square h-full max-h-[500px] w-full overflow-hidden">
                             <Image
@@ -48,6 +50,9 @@ export default async function ProductPage({ params }) {
  
                     </div>
                 </div>
+                    <div className="mt-8">
+                    <Reviews productId={params.slug} />
+                    </div>
             </div>
 
         </>
