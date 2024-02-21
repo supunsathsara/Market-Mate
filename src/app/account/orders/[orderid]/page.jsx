@@ -1,13 +1,15 @@
 import { query } from "@/lib/db";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
 
 export default async function OrderDetailsPage({ params }) {
 
+    const session = await getServerSession();
     const order = await query({
-        query: "SELECT o.*, op.id AS payment_id, op.status AS payment_status FROM `order` o LEFT JOIN order_payment op ON o.id = op.order_id WHERE o.id = ?;",
-        values: [params.orderid],
+        query: "SELECT o.*, u.email, op.id AS payment_id, op.status AS payment_status FROM `order` o LEFT JOIN order_payment op ON o.id = op.order_id LEFT JOIN user u ON o.customer_id = u.id WHERE o.id = ? AND u.email = ?;",
+        values: [params.orderid, session.user.email ],
     });
 
     if (order.length === 0) {

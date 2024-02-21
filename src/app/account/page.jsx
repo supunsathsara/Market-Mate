@@ -47,18 +47,24 @@ export default async function AccountPage() {
                 <h2 className="text-2xl py-4">Recent Orders</h2>
                 <div className="flex flex-col w-full">
                     <div className="flex w-full justify-between">
-                        <h5 className="text-md font-medium w-1/3">Order ID</h5>
-                        <h5 className="text-md font-medium w-1/3">Order Date</h5>
-                        <h5 className="text-md font-medium w-1/3">Total</h5>
+                        <h5 className="text-md font-medium w-1/4">Order ID</h5>
+                        <h5 className="text-md font-medium w-1/4">Order Date</h5>
+                        <h5 className="text-md font-medium w-1/4 text-center">Total</h5>
+                        <h5 className="text-md font-medium w-1/4 text-right">Payment Status</h5>
                     </div>
                     {orders[0].map((order) => (
                         <div key={order.id} className="flex flex-col w-full gap-2 border-b border-gray-600 p-2">
                             <Link href={`/account/orders/${order.id}`}>
-                            <div className="flex w-full justify-between">
-                                <h5 className="text-sm font-medium w-1/3">{order.id}</h5>
-                                <h5 className="text-md font-medium w-1/3">{new Date(order.orderDate).toLocaleString()}</h5>
-                                <h5 className="text-md font-medium w-1/3">Rs. {order.total}</h5>
-                            </div>
+                                <div className="flex w-full justify-between group">
+                                    <h5 className="text-sm font-medium w-1/4 group-hover:underline group-hover:underline-offset-2">{order.id}</h5>
+                                    <h5 className="text-md font-medium w-1/4 group-hover:underline group-hover:underline-offset-2">{new Date(order.orderDate).toLocaleString()}</h5>
+                                    <h5 className="text-md font-medium w-1/4 text-center group-hover:underline group-hover:underline-offset-2">Rs. {order.total}</h5>
+                                    <h5 className="text-md font-medium w-1/4 text-right">
+                                        <span className={`px-2 py-1 rounded-2xl text-[15px] font-light border no-underline ${order.payment_status === 2 ? 'border-green-500 text-green-700' : order.payment_status === 0 ? 'border-yellow-500 text-yellow-700' : 'border-red-500 text-red-700'}`}>
+                                            {order.payment_status === 2 ? "Paid" : order.payment_status === 0 ? "Pending" : "Failed"}
+                                        </span>
+                                    </h5>
+                                </div>
                             </Link>
                         </div>
                     ))}

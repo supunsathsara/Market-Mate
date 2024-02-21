@@ -135,11 +135,12 @@ BEGIN
     FROM user
     WHERE email = userEmail;
     
-    -- Select the most recent three orders for the customer
-    SELECT id, total, orderDate
-    FROM `order`
-    WHERE customer_id = customerId
-    ORDER BY orderDate DESC
+    -- Select the most recent three orders for the customer with payment status and ID
+    SELECT o.id, o.total, o.orderDate, op.id AS payment_id, op.status AS payment_status
+    FROM `order` o
+    LEFT JOIN order_payment op ON o.id = op.order_id
+    WHERE o.customer_id = customerId
+    ORDER BY o.orderDate DESC
     LIMIT 3;
 END //
 
@@ -295,3 +296,5 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
