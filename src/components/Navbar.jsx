@@ -8,9 +8,7 @@ import Logout from './logout';
 
 export default async function Navbar() {
   const menu = [
-    { title: 'Home', path: '/' },
-    { title: 'Products', path: '/products' },
-    { title: 'About', path: '/about' },
+    // { title: 'Home', path: '/' },
   ];
   const session = await getServerSession();
   //console.log(session)
