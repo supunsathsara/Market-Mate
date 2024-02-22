@@ -17,7 +17,7 @@ export default async function CheckoutPage() {
 
     if (products.length === 0) {
         return (
-            <div className="flex w-full h-full items-center justify-center">
+            <div className="flex w-full h-full items-center justify-center text-slate-200">
                 <h1 className="text-3xl mt-28">Cart is Empty</h1>
             </div>
         );
@@ -80,10 +80,10 @@ export default async function CheckoutPage() {
     }
 
     return (
-        <div className="flex flex-col w-full h-full items-center justify-center">
+        <div className="flex flex-col w-full h-full items-center justify-center text-slate-200">
             <h1 className="text-3xl mt-2">Checkout</h1>
             <div className="flex w-[90%] gap-5">
-                <div className="max-w-lg">
+                <div className="w-72 max-w-xl">
                     <h2 className="text-2xl font-semibold">Your Cart</h2>
                     <div className="flex flex-col gap-4">
                         {products[0].map((product) => (

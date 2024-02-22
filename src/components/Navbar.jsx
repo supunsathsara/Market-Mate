@@ -4,6 +4,8 @@ import Search from './search';
 import { ShoppingCartIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { getServerSession  } from 'next-auth';
 import Logout from './logout';
+import Logo from '../../public/logo-no-background.png'
+import Image from 'next/image';
 
 
 export default async function Navbar() {
@@ -13,15 +15,17 @@ export default async function Navbar() {
   const session = await getServerSession();
   //console.log(session)
   return (
-    <nav className="relative flex items-center justify-between p-4 lg:px-6 z-40">
+    <nav className="relative flex items-center justify-between p-4 lg:px-6 z-40 text-white">
       
-      <div className="flex w-full items-center">
+      <div className="flex w-full items-center text-white">
         <div className="flex w-full md:w-1/3">
-          <Link href="/" className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6">
-            🔥
-            <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
-            Market Mate  
-            </div>
+          <Link href="/" className="mr-2 flex p-2 w-full items-center justify-center md:w-auto lg:mr-6">
+            <Image 
+            src={Logo}
+            alt='logo'
+            height={35}
+            className='cursor-pointer'
+            />
           </Link>
           {menu.length ? (
             <ul className="gap-6 text-sm flex items-center">

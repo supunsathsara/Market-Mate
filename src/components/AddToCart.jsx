@@ -16,7 +16,7 @@ export default function AddToCart({ productId,session , AoQ}) {
         })
         
     return (
-        <div className="max-w-lg">
+        <div className="max-w-lg text-white">
             <div className=" w-fit justify-between flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
                 <button
                     onClick={

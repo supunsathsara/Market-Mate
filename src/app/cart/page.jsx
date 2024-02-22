@@ -21,7 +21,7 @@ export default async function CartPage() {
 
     if (!session) {
         return (
-            <div className="flex flex-col w-full h-full items-center justify-center">
+            <div className="flex flex-col w-full h-full items-center justify-center text-slate-200">
                 <h1 className="text-3xl mt-28">Please Login to view your cart</h1>
                 <Link href="/login" className="text-xl underline-offset-2 underline">Login</Link>
             </div>
@@ -36,14 +36,14 @@ export default async function CartPage() {
 
     if (products[0].length === 0) {
         return (
-            <div className="flex w-full h-full items-center justify-center">
+            <div className="flex w-full h-full items-center justify-center text-slate-200">
                 <h1 className="text-3xl mt-28">Cart is Empty</h1>
             </div>
         );
     }
 
     return (
-        <div className="mx-auto max-w-screen-lg px-4 text-slate-200">
+        <div className="mx-auto h-full max-w-screen-lg px-4 text-slate-200">
             <h1 className="text-3xl font-medium mb-4">Cart</h1>
             <div className="flex flex-col gap-4">
                 {products[0].map((product) => (
@@ -70,7 +70,7 @@ export default async function CartPage() {
                         </div>
                         <div className='flex gap-5 mr-5'>
                             <p className="text-lg font-medium">
-                                {product.total_price}
+                                Rs. {product.total_price}
                             </p>
                             <div>
                                 <RemoveFromCart cart_id={product.cart_id} removeFromCart={removeFromCart} />
@@ -80,7 +80,7 @@ export default async function CartPage() {
                     </div>
                 ))}
             </div>
-            <div className="flex flex-col float-end justify-end mt-6">
+            <div className="flex flex-col text-right justify-end mt-6 mb-4">
                 <h2 className="text-xl font-medium">Net Total: {netTotal.toFixed(2)} LKR</h2>
                 <div className='flex justify-end mt-3'>
                 <Link href="/cart/checkout" className=" flex text-xl w-fit text-right">

@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="min-h-screen h-full">
+      <body className="min-h-screen h-full text-slate-200">
         <ToastProvider>
           <Navbar/>
           {children}

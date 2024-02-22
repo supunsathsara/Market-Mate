@@ -117,7 +117,6 @@ export default function CustomerDetails({ user, netTotal, merchantSecret,  handl
                                 Pay
                                 <CurrencyDollarIcon className="h-6 w-6 ml-2" />
                             </button>
-                            <button type="submit">Submit</button>
                         </div>
                     </div>
                 </form>

@@ -21,8 +21,8 @@ export default async function ProductPage({ params }) {
 
     return (
         <>
-            <div className="mx-auto max-w-screen-xl px-4">
-                <div className="flex flex-col rounded-lg border p-8 border-neutral-800 bg-black md:p-12 lg:flex-row lg:gap-8">
+            <div className="mx-auto max-w-screen-xl px-4 text-white">
+                <div className="flex flex-col rounded-lg border p-8 border-neutral-800 bg-transparent md:p-12 lg:flex-row lg:gap-8">
                     <div className="h-full w-full basis-full lg:basis-4/6">
                         <div className="relative aspect-square h-full max-h-[500px] w-full overflow-hidden">
                             <Image
