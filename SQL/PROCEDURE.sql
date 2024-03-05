@@ -11,7 +11,7 @@ BEGIN
     DECLARE userPassword VARCHAR(255);
     
     DECLARE cur CURSOR FOR 
-        SELECT id, name, address, email, mobile, password
+        SELECT id, name, address, email, mobile, password 
         FROM user
         WHERE id = userId;
         
@@ -31,10 +31,7 @@ BEGIN
 END //
 
 
-
 -- Add a product to the cart
-DELIMITER //
-
 CREATE PROCEDURE addToCart (IN productId INT, IN userEmail VARCHAR(255), IN quantity INT)
 BEGIN
     DECLARE userId INT;
@@ -59,8 +56,6 @@ BEGIN
         VALUES (userId, productId, quantity);
     END IF;
 END //
-
-DELIMITER ;
 
 
 -- Get cart items by email
@@ -90,10 +85,15 @@ END //
 
 
 -- Checkout order
-CREATE PROCEDURE checkout (IN userEmail VARCHAR(255), IN total DECIMAL(10,2), IN address VARCHAR(500), IN mobile VARCHAR(20))
+CREATE PROCEDURE checkout (
+    IN userEmail VARCHAR(255), 
+    IN orderId VARCHAR(100), 
+    IN total DECIMAL(10,2), 
+    IN address VARCHAR(500), 
+    IN mobile VARCHAR(20)
+)
 BEGIN
     DECLARE customerId INT;
-    DECLARE orderId INT;
     
     -- Get the customer ID based on the email
     SELECT id INTO customerId
@@ -101,11 +101,8 @@ BEGIN
     WHERE email = userEmail;
     
     -- Add the order to the order table
-    INSERT INTO `order` (customer_id, total, address, mobile)
-    VALUES (customerId, total, address, mobile);
-    
-    -- Get the ID of the last inserted order
-    SET orderId = LAST_INSERT_ID();
+    INSERT INTO `order` (id, customer_id, total, address, mobile)
+    VALUES (orderId, customerId, total, address, mobile);
     
     -- Insert order items from the cart table
     INSERT INTO order_item (order_id, product_id, product_qty)
@@ -113,7 +110,7 @@ BEGIN
     FROM cart
     WHERE user_id = customerId;
 
-     -- Deduct purchased quantities from the product table
+    -- Deduct purchased quantities from the product table
     UPDATE product p
     INNER JOIN cart c ON p.id = c.product_id
     SET p.qty = p.qty - c.qty
@@ -156,73 +153,15 @@ BEGIN
     FROM user
     WHERE email = userEmail;
     
-    -- Select the most recent three orders for the customer
-    SELECT id, total, orderDate
-    FROM `order`
-    WHERE customer_id = customerId
-    ORDER BY orderDate DESC
+    -- Select orders for the customer with payment status and ID
+    SELECT o.id, o.total, o.orderDate, op.id AS payment_id, op.status AS payment_status
+    FROM `order` o
+    LEFT JOIN order_payment op ON o.id = op.order_id
+    WHERE o.customer_id = customerId
+    ORDER BY o.orderDate DESC;
 END //
 
 
--- Get Product details for a given order
-CREATE PROCEDURE getOrderProducts (IN orderId INT)
-BEGIN
-    -- Select product details for the given order ID
-    SELECT 
-        p.id AS product_id,
-        p.title AS product_title,
-        p.price AS unit_price,
-        oi.product_qty AS quantity,
-        (p.price * oi.product_qty) AS total_price,
-        p.image AS product_image,
-        p.description AS product_description
-    FROM order_item oi
-    INNER JOIN product p ON oi.product_id = p.id
-    WHERE oi.order_id = orderId;
-END //
-
-
----!UPDATED PROCEDURES
-DELIMITER //
-CREATE PROCEDURE checkout (
-    IN userEmail VARCHAR(255), 
-    IN orderId VARCHAR(100), 
-    IN total DECIMAL(10,2), 
-    IN address VARCHAR(500), 
-    IN mobile VARCHAR(20)
-)
-BEGIN
-    DECLARE customerId INT;
-    
-    -- Get the customer ID based on the email
-    SELECT id INTO customerId
-    FROM user
-    WHERE email = userEmail;
-    
-    -- Add the order to the order table
-    INSERT INTO `order` (id, customer_id, total, address, mobile)
-    VALUES (orderId, customerId, total, address, mobile);
-    
-    -- Insert order items from the cart table
-    INSERT INTO order_item (order_id, product_id, product_qty)
-    SELECT orderId, product_id, qty
-    FROM cart
-    WHERE user_id = customerId;
-
-    -- Deduct purchased quantities from the product table
-    UPDATE product p
-    INNER JOIN cart c ON p.id = c.product_id
-    SET p.qty = p.qty - c.qty
-    WHERE c.user_id = customerId;
-    
-    -- Remove items from the cart table
-    DELETE FROM cart
-    WHERE user_id = customerId;
-END //
-DELIMITER ;
-
-
-DELIMITER /
 -- Get Product details for a given order
 CREATE PROCEDURE getOrderProducts (IN orderId VARCHAR(100))
 BEGIN
@@ -239,12 +178,8 @@ BEGIN
     INNER JOIN product p ON oi.product_id = p.id
     WHERE oi.order_id = orderId;
 END //
-DELIMITER ;
 
-
--- Procedure to update payment details
-DELIMITER //
-
+-- Update Payment of an Order
 CREATE PROCEDURE updatePayment (
     IN paymentId VARCHAR(255), 
     IN orderId VARCHAR(255), 
@@ -273,28 +208,6 @@ BEGIN
     
 END //
 
-DELIMITER ;
 
-
-DELIMITER //
-
-CREATE PROCEDURE getAllOrdersByEmail (IN userEmail VARCHAR(255))
-BEGIN
-    DECLARE customerId INT;
-    
-    -- Get the customer ID based on the email
-    SELECT id INTO customerId
-    FROM user
-    WHERE email = userEmail;
-    
-    -- Select orders for the customer with payment status and ID
-    SELECT o.id, o.total, o.orderDate, op.id AS payment_id, op.status AS payment_status
-    FROM `order` o
-    LEFT JOIN order_payment op ON o.id = op.order_id
-    WHERE o.customer_id = customerId
-    ORDER BY o.orderDate DESC;
-END //
-
-DELIMITER ;
 
 
