@@ -9,7 +9,7 @@ export default function Footer() {
             <div className="flex flex-col md:flex-row justify-between mx-8 pb-5">
                 <span className="block text-sm sm:text-base sm:tracking-wider mb-1 text-gray-400 items-center justify-center gap-1 text-center">© 2024 <Link href="/" className="hover:underline">Market Mate™</Link>. All Rights Reserved.</span>
                 <p className="text-gray-400 text-sm sm:text-base sm:tracking-wider flex items-center justify-center gap-1 text-center">
-                    Made with ❤️ by
+                    {/* Made with ❤️ 
                     <a href="https://supunsathsara.com" target="_blank" rel="noreferrer" className="text-blue-600 hover:text-blue-700">
                         <Image
                             src={supunsathsaraLogo}
@@ -17,7 +17,8 @@ export default function Footer() {
                             width={220}
                             height={40} // Adjust height as needed
                         />
-                    </a>
+                    </a> */}
+                    Elevating your shopping experience, one click at a time.
                 </p>
             </div>
         </footer>
