@@ -1,6 +1,7 @@
 # Market Mate
-
 Welcome to Market Mate, your go-to online marketplace! Built with cutting-edge technology, Market Mate offers a seamless shopping experience, enabling users to explore products, read and post reviews, and manage their purchases with ease.
+
+![logo-no-background](https://github.com/supunsathsara/Market-Mate/assets/67389877/227e28e3-8e18-4ee3-9dfb-07c51ed52c1f)
 
 ## Features
 
@@ -28,6 +29,8 @@ To test simulated successful payments, you can use the following test card numbe
 - **AMEX**: 346781005510225
 
 For ‘Name on Card’, ‘CVV’ & ‘Expiry date’, you can enter any valid data. Any card except the above will result in a failed payment.
+
+<img width="1437" alt="image" src="https://github.com/supunsathsara/Market-Mate/assets/67389877/164c69c2-ea02-4109-917d-ef85b4ca5bd2">
 
 ## Contributing
 
