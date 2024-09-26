@@ -123,7 +123,7 @@ export default function CustomerDetails({ user, netTotal, merchantSecret,  handl
             </div>
 
             {/* <Script src='/payhere.dev.js'></Script> */}
-            <Script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></Script>
+            <Script type="text/javascript" src="/js/payhere.js"></Script>
         </>
     )
 }
