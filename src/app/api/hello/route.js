@@ -1,4 +1,6 @@
 import { query } from "@/lib/db";
+import { dbConnect } from "@/lib/mongodb";
+import ReviewModel from "@/models/ReviewModel";
 import { NextResponse } from "next/server";
 
 export const revalidate = 0
@@ -10,8 +12,9 @@ export async function GET(req, res) {
     });
 
     // query: "CALL getUserById(6);",
-
-    return NextResponse.json({ message: "success", products })
-   // return NextResponse.json({ message: "success"})
+    const con = await dbConnect();
+    const reviews = await ReviewModel.find({});
+    return NextResponse.json({ message: "success", products, reviews });
+    // return NextResponse.json({ message: "success"})
 
 }
